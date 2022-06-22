@@ -4,8 +4,8 @@ import com.cos.blog.model.RoleType;
 import com.cos.blog.model.UserModel;
 import com.cos.blog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -39,7 +39,8 @@ public class DummyController {
         userModel.setId(id);
 
        UserModel _usermodel = userRepository.findById(id).orElseThrow(() -> {
-           throw new IllegalArgumentException("유저가 없습니다.");
+           return new IllegalArgumentException("유저가 없습니다.");
+//           throw new IllegalArgumentException("유저가 없습니다.");
         });
         _usermodel.setPassword(userModel.getPassword());
         _usermodel.setEmail(userModel.getEmail());
@@ -73,6 +74,7 @@ public class DummyController {
             @Override
             public IllegalArgumentException get() {
                 return new IllegalArgumentException("해당 유저는 없습니다. id : " + id);
+//                throw new IllegalArgumentException("해당 유저는 없습니다. id : " + id);
             }
         });
         return userModel;
