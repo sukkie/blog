@@ -9,10 +9,23 @@ let index = {
             userName : $("#userName").val(),
             password : $("#password").val(),
             email : $("#email").val()
-        }
+        };
 
-        console.log(data);
-//        $.ajax.done().fail();
+//        console.log(data);
+        $.ajax({
+            type: "POST",
+            url: "/api/user",
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8", // MIME TYPE
+            dataType: "json" // 응답이 json이라고 알려주면 json문자열을 자바스크립트 오브벡트로 변환하여 다음 함수의 인자로 전달
+        // 성공
+        }).done(function(resp) {
+            alert("회원가입이 완료되었습니다.");
+            location.href = "/blog/"
+        // 실해
+        }).fail(function(error) {
+            alert(JSON.stringify(error));
+        });
     }
 }
 
