@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
             log.error("=================================================");
         }
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("<h1>"+ex.getMessage()+"</h1>");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
     }
 //    public String handleArgumentException(IllegalArgumentException e) {
 //        return "<h1>"+e.getMessage()+"</h1>";
