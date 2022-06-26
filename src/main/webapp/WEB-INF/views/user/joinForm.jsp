@@ -4,8 +4,8 @@
 
 <div class="container">
      <div class="form-group">
-       <label for="userName">UserName:</label>
-       <input type="text" class="form-control" placeholder="Enter username" id="userName">
+       <label for="username">UserName:</label>
+       <input type="text" class="form-control" placeholder="Enter username" id="username">
      </div>
 
      <div class="form-group">

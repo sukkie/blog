@@ -9,6 +9,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -27,7 +29,6 @@ public class Board {
     @Lob
     private String content;
 
-    @ColumnDefault("0")
     private int count;
 
     @ManyToOne(fetch = FetchType.EAGER) // Board가 Many, UserModel이 One
@@ -36,8 +37,11 @@ public class Board {
     // 실제 RDB에는 int userId로 저장
     private UserModel userModel;
 
+    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
+    private List<Reply> reply;
+
     @CreationTimestamp
-    private Timestamp createDate;
+    private LocalDateTime createDate;
 
     public UserModel getUserModel() {
         return userModel;
