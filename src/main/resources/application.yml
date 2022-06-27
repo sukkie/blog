@@ -8,6 +8,9 @@ spring:
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp
+    hiddenmethod:
+      filter:
+        enabled: true
   h2:
     console:
       enabled: true

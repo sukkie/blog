@@ -3,25 +3,28 @@
 <%@ include file="../layout/header.jsp" %>
 
 <div class="container">
-   <form>
-     <div class="form-group">
+    <button class="btn btn-secondary" onclick="history.back();">돌아가기</button>
+    <button id="btn-update" class="btn btn-warning">수정</button>
+    <c:if test="${board.user.id == principal.user.id}">
+    <button id="btn-delete" class="btn btn-danger">삭제</button>
+    </c:if>
+    <br /><br />
+    <div>
+        글번호: <span id="id"><i>${board.id} </i></span>
+        작성자: <span><i>${board.userModel.username} </i></span>
+    </div>
+    <br />
+     <div>
        <h3>${board.title}</h3>
      </div>
-
-    <div class="form-group">
+    <hr />
+    <div>
       <div>${board.content}</div>
     </div>
-   </form>
+    <hr />
 
-   <button id="btn-save" class="btn btn-primary">글쓰기 완료</button>
 </div>
 
-<script>
-  $('.summernote').summernote({
-    tabsize: 2,
-    height: 300
-  });
-</script>
 <script src="/js/board.js">
 </script>
 

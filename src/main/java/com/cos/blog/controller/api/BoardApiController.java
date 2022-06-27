@@ -9,10 +9,7 @@ import com.cos.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class BoardApiController {
@@ -23,6 +20,12 @@ public class BoardApiController {
     @PostMapping("/api/board")
     public ResponseDto<?> save(@RequestBody Board board, @AuthenticationPrincipal PrincipalDetail principalDetail) {
         boardService.글쓰기(board, principalDetail.getUserModel());
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+    }
+
+    @DeleteMapping("/api/board/{id}")
+    public ResponseDto<?> deleteById(@PathVariable int id) {
+        boardService.글삭제하기(id);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 }
