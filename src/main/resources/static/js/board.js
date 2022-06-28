@@ -6,6 +6,9 @@ let index = {
         $("#btn-delete").on("click", ()=> {
             this.deleteById();
         });
+        $("#btn-update").on("click", ()=> {
+            this.update();
+        });
     },
     save: function() {
         let data = {
@@ -52,7 +55,7 @@ let index = {
         });
     },
     deleteById: function() {
-        var id = $("#id").text();
+        let id = $("#id").text();
         $.ajax({
             type: "DELETE",
             url: "/api/board/" + id,
@@ -62,6 +65,28 @@ let index = {
             alert("삭제가 완료되었습니다.");
             location.href = "/"
         // 실행
+        }).fail(function(error) {
+            alert(JSON.stringify(error));
+        });
+    },
+    update: function() {
+        let id = $("#id").val();
+        let data = {
+            title : $("#title").val(),
+            content : $("#content").val()
+        };
+
+        $.ajax({
+            type: "PUT",
+            url: "/api/board/" + id,
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8", // MIME TYPE
+            dataType: "json" // 응답이 json이라고 알려주면 json문자열을 자바스크립트 오브벡트로 변환하여 다음 함수의 인자로 전달
+        // 성공
+        }).done(function(resp) {
+            alert("글수정이 완료되었습니다.");
+            location.href = "/"
+        // 실해
         }).fail(function(error) {
             alert(JSON.stringify(error));
         });
