@@ -8,16 +8,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 // /index.jsp 도 허용
 // /static 이하도 허용 /js/**, /css/**, /image/**
 @Controller
-@RequestMapping("/auth")
 public class UserController {
 
-    @GetMapping("joinForm")
+    @GetMapping("/auth/joinForm")
     public String joinForm() {
         return "user/joinForm";
     }
 
-    @GetMapping("loginForm")
+    @GetMapping("/auth/loginForm")
     public String loginForm() {
         return "user/loginForm";
+    }
+
+    @GetMapping("/user/updateForm")
+    public String updateForm() {
+        return "user/updateForm";
     }
 }
