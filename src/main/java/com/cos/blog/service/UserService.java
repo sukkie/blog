@@ -4,6 +4,10 @@ import com.cos.blog.model.RoleType;
 import com.cos.blog.model.UserModel;
 import com.cos.blog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +21,9 @@ public class UserService {
 
     @Autowired
     private BCryptPasswordEncoder encoder;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @Transactional
     public int 회원가입(UserModel userModel) {
@@ -42,9 +49,24 @@ public class UserService {
             return new IllegalArgumentException("회원찾기 실패");
         });
 
-        persistence.setPassword(encoder.encode(userModel.getPassword()));
-        persistence.setEmail(userModel.getEmail());
+        // kakao로 회원가입한 유저는 수정 못함
+        if (persistence.getOauth() == null || persistence.getOauth().equals("")) {
+            persistence.setPassword(encoder.encode(userModel.getPassword()));
+            persistence.setEmail(userModel.getEmail());
+        }
         // 회원수정 함수 종료시 커밋이 자동으로 진행 - 더티체킹
+
+        // 세션등록
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(userModel.getUsername(), userModel.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    @Transactional(readOnly = true)
+    public UserModel 회원찾기(String username) {
+        return userRepository.findByUsername(username).orElseGet(() -> {
+            return null;
+        });
     }
 
 //    @Transactional(readOnly = true)

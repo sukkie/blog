@@ -54,7 +54,8 @@ public class DummyController {
     // http://localhost:8080/dummy/user
     @GetMapping("dummy/users")
     public List<UserModel> users() {
-        return userRepository.findAll();
+        throw new IllegalArgumentException("aaa");
+//        return userRepository.findAll();
     }
 
     // http://localhost:8080/dummy/user
